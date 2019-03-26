@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFE851">
+
+        <Button
+            android:id="@+id/bt_biaoge"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#FFE851"
+            android:text="图 表"
+            android:textAlignment="center"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/biaoge_yue"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#000000"
+                android:text="月"
+                android:textColor="#FFE851"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/biaoge_nian"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/bt_nianyueri"
+                android:text="年"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp">
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/line_chart1"
+                android:layout_width="fill_parent"
+                android:layout_height="400dp"/>
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/line_chart2"
+                android:layout_width="fill_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="25dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

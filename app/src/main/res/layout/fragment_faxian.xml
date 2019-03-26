@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#FFE851"
+        android:text="查 找"
+        android:textAlignment="center"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFE851"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_fxchaxun"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="9dp"
+            android:background="@android:color/transparent"
+            android:text="选择查询方式"
+            android:textAlignment="center"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/tv_chaxun"
+            android:layout_width="220dp"
+            android:layout_height="27dp"
+            android:background="@drawable/bg_edittext"
+            android:ems="10"
+            android:hint="请输入查询内容"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/bt_fxjieguo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="12dp"
+            android:background="@android:drawable/ic_menu_search" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/faxianliebiao"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:background="#FFFFFF"
+        android:layout_marginTop="8dp">
+
+    </ListView>
+
+</LinearLayout>
