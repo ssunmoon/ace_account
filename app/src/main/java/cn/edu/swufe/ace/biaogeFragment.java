@@ -23,16 +23,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lecho.lib.hellocharts.formatter.ColumnChartValueFormatter;
+import lecho.lib.hellocharts.formatter.SimpleColumnChartValueFormatter;
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
+import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class biaogeFragment extends android.support.v4.app.Fragment{
 
@@ -53,6 +64,21 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
     private int msgWhatw1 = 141;//连接数据库失败
     String yonghu;
 
+    private PieChartView piechart1;
+    private PieChartData pie_data1;         //存放数据
+    private boolean hasLabels1 = true;                   //是否有标签
+    private boolean hasLabelsOutside1 = false;           //标签是否在扇形外面
+    private boolean hasCenterCircle1 = true;            //是否有中心圆
+    private boolean hasCenterText11 = true;             //是否有中心的文字
+    private boolean hasCenterText21 = false;             //是否有中心的文字2
+    private boolean isExploded1 = false;                  //是否是炸开的图像
+    private boolean hasLabelForSelected1 = false;         //选中的扇形显示标签
+
+    private ColumnChartView barchart;
+    private ColumnChartData bardata;
+    public final static String[] week = new String[]{"收入", "支出"};
+    private List<Float> list = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +86,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 
         SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("riqi", Activity.MODE_PRIVATE);
         year = sharedPreferences1.getString("year","2019");
-        month = sharedPreferences1.getString("month","03");
+        month = sharedPreferences1.getString("month","04");
 
         SharedPreferences sharedPreferences0 = getActivity().getSharedPreferences("default_user", Activity.MODE_PRIVATE);
         yonghu = sharedPreferences0.getString("yonghu","");
@@ -72,13 +98,31 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //        getAxisPoints();//获取坐标点
 //        initLineChart();//初始化
 
-        getMonth();
+        getMonth_shouru();
         getMonth_zhichu();
+
+        piechart1 = (PieChartView) view.findViewById(R.id.piechart1);
+        piechart1.setOnValueTouchListener(new PieChartOnValueSelectListener() {
+            @Override
+            public void onValueSelected(int i, SliceValue sliceValue) {
+                Toast.makeText(getActivity(), "选中值"+sliceValue, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onValueDeselected() {
+
+            }
+        });
+        pie_initDatas1();
+
+        barchart= (ColumnChartView) view.findViewById(R.id.barchart);
+        barchart.setZoomEnabled(true);//允许手势缩放
+        bar_initData();
 
         return view;
     }
 
-    public void getMonth()
+    public void getMonth_shouru()
     {
         date = new String[31];
         for(int i=1;i<32;i++)
@@ -145,7 +189,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                             {
                                 i=Integer.valueOf(rs1.getString(1).substring(0,2));
                             }
-                            score[i-1]= score[i] + (int) Math.round(Double.parseDouble(rs1.getString(2)));
+                            score[i-1]= score[i-1] + (int) Math.round(Double.parseDouble(rs1.getString(2)));
                         }
                         msg.what=msgWhatr;
                     }
@@ -204,7 +248,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextColor(Color.GRAY);  //设置字体颜色
-        axisX.setName("收入");  //表格名称
+//        axisX.setName("收入");  //表格名称
         axisX.setTextSize(10);//设置字体大小
         axisX.setMaxLabelChars(8); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
         axisX.setValues(mAxisXValues);  //填充X轴的坐标名称
@@ -303,7 +347,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                             {
                                 i=Integer.valueOf(rs1.getString(1).substring(0,2));
                             }
-                            score_zhichu[i-1]= score_zhichu[i] + (int) Math.round(Double.parseDouble(rs1.getString(2)));
+                            score_zhichu[i-1]= score_zhichu[i-1] + (int) Math.round(Double.parseDouble(rs1.getString(2)));
                         }
                         msg.what=msgWhatr;
                     }
@@ -362,7 +406,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
         Axis axisX = new Axis(); //X轴
         axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
         axisX.setTextColor(Color.GRAY);  //设置字体颜色
-        axisX.setName("支出");  //表格名称
+//        axisX.setName("支出");  //表格名称
         axisX.setTextSize(10);//设置字体大小
         axisX.setMaxLabelChars(8); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
         axisX.setValues(mAxisXValues_zhichu);  //填充X轴的坐标名称
@@ -394,4 +438,103 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
         lineChart_zhichu.setCurrentViewport(v);
     }
 
+    private void pie_initDatas1(){
+        int numValues = 6;
+        //初始化数据
+
+        int[] pie_data = {21, 20, 9, 2, 19,20,70};
+        int[] colorData = {Color.parseColor("#46c099"),
+                Color.parseColor("#8180ff"),
+                Color.parseColor("#50b2ef"),
+                Color.parseColor("#aad8fb"),
+                Color.parseColor("#f7d878"),
+                Color.parseColor("#c8e9a0"),
+                Color.parseColor("#f4a277")};//颜色可以默认，chart有个colorUtil工具类，随机颜色
+
+        List<SliceValue> values = new ArrayList<SliceValue>();
+        for (int i = 0; i < pie_data.length; ++i) {
+            SliceValue sliceValue = new SliceValue((float) pie_data[i], colorData[i]);
+            values.add(sliceValue);
+        }
+
+        pie_data1 = new PieChartData(values);
+        pie_data1.setHasLabels(hasLabels1);
+        pie_data1.setHasLabelsOnlyForSelected(hasLabelForSelected1);
+        pie_data1.setHasLabelsOutside(hasLabelsOutside1);
+        pie_data1.setHasCenterCircle(hasCenterCircle1);
+
+        if (isExploded1) {
+            pie_data1.setSlicesSpacing(24);
+        }
+
+        if (hasCenterText11) {
+            pie_data1.setCenterText1("Hello!");//设置中心文字1
+        }
+
+        if (hasCenterText21) {
+            pie_data1.setCenterText2("Charts (Roboto Italic)");//设置中心文字2
+        }
+
+        piechart1.setPieChartData(pie_data1);
+    }
+
+    private void bar_initData() {
+        list.add((float) 1500);//把你获取到的或用到的数据填充到集合中
+        list.add((float) 1200);
+        setFirstChart();
+    }
+
+    private void setFirstChart() {
+        // 使用的 7列，每列1个subcolumn。
+        int numSubcolumns = 1;
+        int numColumns = 2;
+        int[] barcolor = {Color.parseColor("#c8e9a0"),Color.parseColor("#f4a277")};
+        //定义一个圆柱对象集合
+        List<Column> columns = new ArrayList<Column>();
+        //子列数据集合
+        List<SubcolumnValue> values;
+
+        List<AxisValue> axisValues = new ArrayList<AxisValue>();
+        //遍历列数numColumns
+        for (int i = 0; i < numColumns; ++i) {
+            values = new ArrayList<SubcolumnValue>();
+            //遍历每一列的每一个子列
+            for (int j = 0; j < numSubcolumns; ++j) {
+                //为每一柱图添加颜色和数值
+                float f = list.get(i);
+                values.add(new SubcolumnValue(f,barcolor[i]));
+            }
+            //创建Column对象
+            Column column = new Column(values);
+            //这一步是能让圆柱标注数据显示带小数的重要一步 让我找了好久问题
+            //作者回答https://github.com/lecho/hellocharts-android/issues/185
+            ColumnChartValueFormatter chartValueFormatter = new SimpleColumnChartValueFormatter(2);
+            column.setFormatter(chartValueFormatter);
+            //是否有数据标注
+            column.setHasLabels(true);
+            //是否是点击圆柱才显示数据标注
+            column.setHasLabelsOnlyForSelected(false);
+            columns.add(column);
+            //给x轴坐标设置描述
+            axisValues.add(new AxisValue(i).setLabel(week[i]));
+        }
+        //创建一个带有之前圆柱对象column集合的ColumnChartData
+        bardata= new ColumnChartData(columns);
+
+        //定义x轴y轴相应参数
+        Axis axisX = new Axis();
+        Axis axisY = new Axis().setHasLines(true);
+        axisY.setName("");//轴名称
+        axisY.hasLines();//是否显示网格线
+//        axisY.setTextColor(Color.GRAY);//颜色
+
+        axisX.hasLines();
+        axisX.setTextColor(Color.GRAY);
+        axisX.setValues(axisValues);
+        //把X轴Y轴数据设置到ColumnChartData 对象中
+        bardata.setAxisXBottom(axisX);
+        bardata.setAxisYLeft(axisY);
+        //给表填充数据，显示出来
+        barchart.setColumnChartData(bardata);
+    }
 }

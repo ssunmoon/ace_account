@@ -44,12 +44,12 @@
 
         <!--注册-->
         <activity android:name=".ZhuceActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
         <!--找回密码-->
         <activity android:name=".ZhaohuiActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
         <!--记账-->
