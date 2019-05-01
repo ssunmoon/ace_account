@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -135,33 +136,33 @@
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="7dp"
                 android:background="#FFFFFF"
+                android:drawableLeft="@drawable/bianjinicheng"
+                android:drawableRight="@drawable/youjiantou"
                 android:gravity="center_vertical"
                 android:text="   编辑昵称"
                 android:textColor="#000000"
-                android:textSize="15sp"
-                android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/bianjinicheng"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView35"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
+                android:drawableLeft="@drawable/xiugaimima"
+                android:drawableRight="@drawable/youjiantou"
                 android:gravity="center_vertical"
                 android:text="   修改密码"
                 android:textColor="#000000"
-                android:textSize="15sp"
-                android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/xiugaimima"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView37"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
                 android:drawableLeft="@drawable/leibieshezhi"
@@ -174,15 +175,28 @@
             <TextView
                 android:id="@+id/textView40"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
+                android:drawableLeft="@drawable/zhangbenshezhi"
+                android:drawableRight="@drawable/youjiantou"
                 android:gravity="center_vertical"
                 android:text="   账本设置"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/textView50"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="5dp"
+                android:background="#FFFFFF"
+                android:drawableLeft="@drawable/bianjinicheng"
                 android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/zhangbenshezhi"/>
+                android:gravity="center_vertical"
+                android:text="   成员设置"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -194,14 +208,14 @@
                 <TextView
                     android:id="@+id/textView38"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
+                    android:drawableLeft="@drawable/mingxixiangqing"
                     android:gravity="center_vertical"
                     android:text="   明细详情"
                     android:textColor="#000000"
-                    android:textSize="15sp"
-                    android:drawableLeft="@drawable/mingxixiangqing"/>
+                    android:textSize="15sp" />
 
                 <Switch
                     android:id="@+id/switch1"
@@ -213,55 +227,55 @@
             <TextView
                 android:id="@+id/textView36"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="   设置预算"
-                android:textSize="15sp"
+                android:drawableLeft="@drawable/shezhiyusuan"
                 android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/shezhiyusuan"/>
+                android:gravity="center_vertical"
+                android:text="   设置预算"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView33"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="   查看已有预算"
-                android:textSize="15sp"
+                android:drawableLeft="@drawable/chakanxiangqing"
                 android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/chakanxiangqing"/>
+                android:gravity="center_vertical"
+                android:text="   查看已有预算"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView39"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="   交易方式设置"
-                android:textSize="15sp"
+                android:drawableLeft="@drawable/jiaoyifangshi"
                 android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/jiaoyifangshi"/>
+                android:gravity="center_vertical"
+                android:text="   交易方式设置"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
                 android:background="#FFFFFF"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:text="   意见反馈"
-                android:textSize="15sp"
+                android:drawableLeft="@drawable/yijianfankui"
                 android:drawableRight="@drawable/youjiantou"
-                android:drawableLeft="@drawable/yijianfankui"/>
+                android:gravity="center_vertical"
+                android:text="   意见反馈"
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/tuichudenglu"

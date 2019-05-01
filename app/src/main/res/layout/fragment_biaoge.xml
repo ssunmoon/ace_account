@@ -67,57 +67,115 @@
             <TextView
                 android:id="@+id/textView45"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/textbiankuang"
                 android:text="收 入 图 表"
+                android:gravity="center"
                 android:textAlignment="center"
-                android:textSize="15sp"
-                android:background="@drawable/textbiankuang"/>
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/line_chart1"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginBottom="15dp"/>
 
             <lecho.lib.hellocharts.view.PieChartView
                 android:id="@+id/piechart1"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="15dp"/>
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart2"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart3"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart4"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
 
             <TextView
                 android:id="@+id/textView48"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/textbiankuang"
+                android:gravity="center"
                 android:text="支 出 图 表"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="15sp" />
 
             <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/line_chart2"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginBottom="15dp"/>
 
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart5"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart6"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart7"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
+            <lecho.lib.hellocharts.view.PieChartView
+                android:id="@+id/piechart8"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp" />
+
             <TextView
                 android:id="@+id/textView49"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/textbiankuang"
+                android:gravity="center"
                 android:text="收 入 与 支 出 图 表"
                 android:textAlignment="center"
+                android:textColor="#000000"
                 android:textSize="15sp" />
 
             <lecho.lib.hellocharts.view.ColumnChartView
                 android:id="@+id/barchart"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
                 android:layout_marginBottom="25dp"/>

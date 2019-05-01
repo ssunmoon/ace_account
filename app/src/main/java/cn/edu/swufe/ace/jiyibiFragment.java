@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class jiyibiFragment extends android.support.v4.app.Fragment{
 
-    Button shouru,zhichu;
+    Button shouru,zhichu,bt_shuaxin;
     String jz_leibie="收入",yonghu;
     GridView gridview;
     List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
@@ -43,6 +43,8 @@ public class jiyibiFragment extends android.support.v4.app.Fragment{
     int[] to = { R.id.item_iv_jiyibi,R.id.item_tv_jiyibi};
     View view;
     int flag=0;
+    private int msgWhatw = 4;//连接数据库失败
+    String password,suijima;
 
     @Nullable
     @Override
@@ -52,8 +54,13 @@ public class jiyibiFragment extends android.support.v4.app.Fragment{
         SharedPreferences sp0 = getActivity().getSharedPreferences("default_user", Activity.MODE_PRIVATE);
         yonghu = sp0.getString("yonghu","");
 
+        SharedPreferences sharedPreferences3 = getActivity().getSharedPreferences(yonghu, Activity.MODE_PRIVATE);
+        password = sharedPreferences3.getString("password","");
+        suijima = sharedPreferences3.getString("suijima","");
+
         shouru = view.findViewById(R.id.button2);
         zhichu = view.findViewById(R.id.button5);
+        bt_shuaxin = view.findViewById(R.id.button6);
 
         getLeixingInfo();
 
@@ -86,6 +93,17 @@ public class jiyibiFragment extends android.support.v4.app.Fragment{
                     shouru.setBackground(getResources().getDrawable(R.drawable.bt_nianyueri));
                     shouru.setTextColor(getActivity().getResources().getColor(R.color.hei));
                     getLeixingInfo();
+                }
+
+            }
+        });
+
+        bt_shuaxin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getActivity() instanceof MainActivity)
+                {
+                    jiancha();
                 }
 
             }
@@ -192,8 +210,68 @@ public class jiyibiFragment extends android.support.v4.app.Fragment{
         });
     }
 
-    public void shuaxin()
+    public void jiancha()
     {
-        getLeixingInfo();
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                if(msg.what == msgWhatr){
+                    getLeixingInfo();
+                }
+                if(msg.what == msgWhatw){//连接数据库失败
+                    Toast.makeText(getActivity(),"您的账户已在异地登陆/密码已被修改",Toast.LENGTH_LONG).show();
+                    SharedPreferences sp0 = getActivity().getSharedPreferences("default_user",Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit0 = sp0.edit();
+                    edit0.putString("status", "0");
+                    edit0.commit();
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                    getActivity().finish();
+                }
+                super.handleMessage(msg);
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int n;
+                Message msg = handler.obtainMessage();
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    String url="jdbc:mysql://rm-bp132n0r530p95d0pfo.mysql.rds.aliyuncs.com:3306/acedata?user=root&password=Sy961016&useUnicode=true&characterEncoding=UTF-8";
+                    Connection conn= (Connection) DriverManager.getConnection(url);//连接数据库
+                    Log.i("成功", "连接到数据库");
+                    Statement st1 = conn.createStatement();
+                    ResultSet rs1 = st1.executeQuery("SELECT * FROM user_info where user_id='"+yonghu+"'");
+                    if(!rs1.next())
+                    {
+                        n=msgWhatw;
+                    }
+                    else
+                    {
+                        Log.i("成功", "连接到数据库");
+                        rs1.beforeFirst();
+                        if(rs1.getString("user_password").equals(password)&&rs1.getString("user_suijima").equals(suijima))
+                        {
+                            n = msgWhatr;
+                        }
+                        else
+                        {
+                            n=msgWhatw;
+                        }
+                    }
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Log.i("失败", "连接不到数据库");
+                    n = msgWhatw;
+                }
+                msg.what=n;
+                handler.sendMessage(msg);
+            }
+        }).start();
     }
 }

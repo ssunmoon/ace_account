@@ -57,6 +57,21 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
+        <!--删除类型-->
+        <activity android:name=".shanchuleixing"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
+        <!--添加类型-->
+        <activity android:name=".tianjialeixing"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
+        <!--查看预算-->
+        <activity android:name=".chakanyusuan"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        </activity>
+
         <!--明细-->
         <activity android:name=".mingxi"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

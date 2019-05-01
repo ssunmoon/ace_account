@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class mingxiFragment extends android.support.v4.app.Fragment{
     private int msgWhatw3 = 143;//无日记录
     private CustomDatePicker mDatePicker;
     Button riqixuanze_month;
-    TextView riqixuanze_year,mingxiriqi,tv19,tv18,tv24,tv21,tv22;
+    TextView riqixuanze_year,mingxiriqi,tv19,tv18,tv24,tv21,tv22,tv_shuaxin;
     int flag=0;
     String[] from = { "image","name","id","jine"};
     int[] to = { R.id.imageView4,R.id.textView41,R.id.textView43,R.id.textView42};
@@ -53,6 +54,8 @@ public class mingxiFragment extends android.support.v4.app.Fragment{
     List<Map<String, Object>> data_zhenshi = new ArrayList<Map<String, Object>>();
     ListView listview;
     double rishouru=0,rizhichu=0,yueshouru=0,yuezhichu=0,yueyue=0;
+    String password,suijima;
+    private int msgWhatw = 4;//连接数据库失败
 
     @Nullable
     @Override
@@ -62,11 +65,16 @@ public class mingxiFragment extends android.support.v4.app.Fragment{
         SharedPreferences sharedPreferences0 = getActivity().getSharedPreferences("default_user", Activity.MODE_PRIVATE);
         yonghu = sharedPreferences0.getString("yonghu","");
 
+        SharedPreferences sharedPreferences3 = getActivity().getSharedPreferences(yonghu, Activity.MODE_PRIVATE);
+        password = sharedPreferences3.getString("password","");
+        suijima = sharedPreferences3.getString("suijima","");
+
         tv18=view.findViewById(R.id.textView18);//月支出
         tv19=view.findViewById(R.id.textView19);//月收入
         tv21=view.findViewById(R.id.textView21);//日收入
         tv22=view.findViewById(R.id.textView22);//日余额
         tv24=view.findViewById(R.id.textView24);//yue余额
+        tv_shuaxin=view.findViewById(R.id.textView13);
 
         //日期按钮
         riqixuanze_month = view.findViewById(R.id.riqixuanze);
@@ -82,6 +90,13 @@ public class mingxiFragment extends android.support.v4.app.Fragment{
                     String str = riqixuanze_year.getText().toString()+"-"+riqixuanze_month.getText().toString();
                     mDatePicker.show(str);
                 }
+            }
+        });
+
+        tv_shuaxin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jiancha();
             }
         });
 
@@ -323,17 +338,92 @@ public class mingxiFragment extends android.support.v4.app.Fragment{
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getActivity(), (String) data_zhenshi.get(position).get("name"),Toast.LENGTH_LONG).show();
-                SharedPreferences sp = getActivity().getSharedPreferences("mingxi",Activity.MODE_PRIVATE);
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putString("user_id", yonghu);
-                edit.putString("image", String.valueOf(data.get(position).get("image")));
-                edit.putString("leixing_name", String.valueOf(data.get(position).get("name")));
-                edit.putString("jizhang_id", String.valueOf(data.get(position).get("id")));
-                edit.putString("jine", String.valueOf(data.get(position).get("jine")));
-                edit.commit();
-                startActivity(new Intent(getActivity(),mingxi.class));
+//                Toast.makeText(getActivity(), (String) data_zhenshi.get(position).get("name"),Toast.LENGTH_LONG).show();
+                SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("xiangqing", Activity.MODE_PRIVATE);
+
+                if(sharedPreferences1.getString("xiangqing","0").equals("1"))
+                {
+                    SharedPreferences sp = getActivity().getSharedPreferences("mingxi",Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("user_id", yonghu);
+                    edit.putString("image", String.valueOf(data.get(position).get("image")));
+                    edit.putString("leixing_name", String.valueOf(data.get(position).get("name")));
+                    edit.putString("jizhang_id", String.valueOf(data.get(position).get("id")));
+                    edit.putString("jine", String.valueOf(data.get(position).get("jine")));
+                    edit.commit();
+                    startActivity(new Intent(getActivity(),mingxi.class));
+                }
+                else
+                {
+                    Toast.makeText(getActivity(),"请到\"我的\"界面开启明细查看权限",Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+
+    public void jiancha()
+    {
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg){
+                if(msg.what == msgWhatr){
+                    initDatePicker();
+                    getData();
+                }
+                if(msg.what == msgWhatw){//连接数据库失败
+                    Toast.makeText(getActivity(),"您的账户已在异地登陆/密码已被修改",Toast.LENGTH_LONG).show();
+                    SharedPreferences sp0 = getActivity().getSharedPreferences("default_user",Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit0 = sp0.edit();
+                    edit0.putString("status", "0");
+                    edit0.commit();
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
+                    getActivity().finish();
+                }
+                super.handleMessage(msg);
+            }
+        };
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int n;
+                Message msg = handler.obtainMessage();
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    String url="jdbc:mysql://rm-bp132n0r530p95d0pfo.mysql.rds.aliyuncs.com:3306/acedata?user=root&password=Sy961016&useUnicode=true&characterEncoding=UTF-8";
+                    Connection conn= (Connection) DriverManager.getConnection(url);//连接数据库
+                    Log.i("成功", "连接到数据库");
+                    Statement st1 = conn.createStatement();
+                    ResultSet rs1 = st1.executeQuery("SELECT * FROM user_info where user_id='"+yonghu+"'");
+                    if(!rs1.next())
+                    {
+                        n=msgWhatw;
+                    }
+                    else
+                    {
+                        Log.i("成功", "连接到数据库");
+                        rs1.beforeFirst();
+                        if(rs1.getString("user_password").equals(password)&&rs1.getString("user_suijima").equals(suijima))
+                        {
+                            n = msgWhatr;
+                        }
+                        else
+                        {
+                            n=msgWhatw;
+                        }
+                    }
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Log.i("失败", "连接不到数据库");
+                    n = msgWhatw;
+                }
+                msg.what=n;
+                handler.sendMessage(msg);
+            }
+        }).start();
     }
 }
