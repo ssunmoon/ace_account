@@ -253,7 +253,6 @@ public class jiyibiFragment extends android.support.v4.app.Fragment{
                     else
                     {
                         Log.i("成功", "连接到数据库");
-                        rs1.beforeFirst();
                         if(rs1.getString("user_password").equals(password)&&rs1.getString("user_suijima").equals(suijima))
                         {
                             n = msgWhatr;

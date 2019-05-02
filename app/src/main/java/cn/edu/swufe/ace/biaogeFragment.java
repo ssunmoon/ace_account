@@ -470,7 +470,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values1.clear();
                     for (int i = 0; i < pie_numb1.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb1[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb1[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name1[i]+(int)sliceValue.getValue());//设置label
                         values1.add(sliceValue);
                     }
@@ -564,7 +564,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values2.clear();
                     for (int i = 0; i < pie_numb2.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb2[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb2[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name2[i]+(int)sliceValue.getValue());//设置label
                         values2.add(sliceValue);
                     }
@@ -658,7 +658,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values3.clear();
                     for (int i = 0; i < pie_numb3.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb3[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb3[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name3[i]+(int)sliceValue.getValue());//设置label
                         values3.add(sliceValue);
                     }
@@ -752,7 +752,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values4.clear();
                     for (int i = 0; i < pie_numb4.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb4[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb4[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name4[i]+(int)sliceValue.getValue());//设置label
                         values4.add(sliceValue);
                     }
@@ -1054,7 +1054,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values5.clear();
                     for (int i = 0; i < pie_numb5.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb5[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb5[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name5[i]+(int)sliceValue.getValue());//设置label
                         values5.add(sliceValue);
                     }
@@ -1147,8 +1147,8 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                 if(msg.what == msgWhatr){
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values6.clear();
-                    for (int i = 0; i < pie_numb6.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb6[i], colorData[i%8]);
+                    for (int i = 0; i < pie_numb6.length; i++) {
+                        SliceValue sliceValue = new SliceValue(pie_numb6[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name6[i]+(int)sliceValue.getValue());//设置label
                         values6.add(sliceValue);
                     }
@@ -1242,7 +1242,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values7.clear();
                     for (int i = 0; i < pie_numb7.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb7[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb7[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name7[i]+(int)sliceValue.getValue());//设置label
                         values7.add(sliceValue);
                     }
@@ -1336,7 +1336,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
 //                    Toast.makeText(getActivity(),"加载成功",Toast.LENGTH_LONG).show();
                     values8.clear();
                     for (int i = 0; i < pie_numb8.length; ++i) {
-                        SliceValue sliceValue = new SliceValue(pie_numb8[i], colorData[i%8]);
+                        SliceValue sliceValue = new SliceValue(pie_numb8[i], colorData[i%7]);
                         sliceValue.setLabel(pie_name8[i]+(int)sliceValue.getValue());//设置label
                         values8.add(sliceValue);
                     }
@@ -1587,7 +1587,6 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                     else
                     {
                         Log.i("成功", "连接到数据库");
-                        rs1.beforeFirst();
                         if(rs1.getString("user_password").equals(password)&&rs1.getString("user_suijima").equals(suijima))
                         {
                             n = msgWhatr;
