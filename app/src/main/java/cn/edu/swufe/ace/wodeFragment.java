@@ -369,6 +369,10 @@ public class wodeFragment extends android.support.v4.app.Fragment{
 //                                                        return pattern.matcher(str).matches();
                                                         if(pattern.matcher(shouru_m).matches())
                                                         {
+                                                            if(shouru_m.length()==0)
+                                                            {
+                                                                shouru_m="0";
+                                                            }
                                                             inputServer2 = new EditText(getActivity());
                                                             new AlertDialog.Builder(getActivity())
                                                                     .setTitle("请输入\""+allchengyuan+"\"的支出金额")
@@ -382,6 +386,10 @@ public class wodeFragment extends android.support.v4.app.Fragment{
 //                                                        return pattern.matcher(str).matches();
                                                                             if(pattern.matcher(zhichu_m).matches())
                                                                             {
+                                                                                if(zhichu_m.length()==0)
+                                                                                {
+                                                                                    zhichu_m="0";
+                                                                                }
                                                                                 tijiaoyusuan();
                                                                             }
                                                                             else
@@ -457,7 +465,7 @@ public class wodeFragment extends android.support.v4.app.Fragment{
                                                                     {
                                                                         update_jiaoyifangshi();
                                                                     }
-                                                                    Log.i("账本名称", jiaoyifangshi);
+                                                                    Log.i("方式名称", jiaoyifangshi);
                                                                     dialog.dismiss();
                                                                 }
                                                             }
@@ -468,7 +476,7 @@ public class wodeFragment extends android.support.v4.app.Fragment{
                                         if(which==1)
                                         {
                                             new AlertDialog.Builder(getActivity())
-                                                    .setTitle("请输入账本名称")
+                                                    .setTitle("请输入方式名称")
                                                     .setIcon(android.R.drawable.ic_dialog_info)
                                                     .setView(inputServer)
                                                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -479,7 +487,7 @@ public class wodeFragment extends android.support.v4.app.Fragment{
                                                             {
                                                                 update_jiaoyifangshi();
                                                             }
-                                                            Log.i("账本名称", jiaoyifangshi);
+                                                            Log.i("方式名称", jiaoyifangshi);
                                                             dialog.dismiss();
                                                         }
                                                     })
