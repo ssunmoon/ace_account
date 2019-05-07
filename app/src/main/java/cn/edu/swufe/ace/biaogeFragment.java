@@ -1423,6 +1423,7 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
     //支出和收入
     private void bar_initData()
     {
+        list.clear();
         final Handler handler = new Handler(){
             @Override
             public void handleMessage(Message msg){
@@ -1460,6 +1461,9 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                     Log.i("成功", "连接到数据库");
                     Statement st1 = conn.createStatement();
                     ResultSet rs1 = st1.executeQuery("SELECT jizhang_leibie,SUM(jizhang_jine) FROM jizhang where user_id='"+yonghu+"' and jizhang_year='"+year+"'"+str+"GROUP BY jizhang_leibie ORDER BY jizhang_leibie DESC");
+                    rs1.last();
+                    int row=rs1.getRow();
+                    rs1.beforeFirst();
                     if(!rs1.next())
                     {
                         list.add((float) 0);
@@ -1471,9 +1475,24 @@ public class biaogeFragment extends android.support.v4.app.Fragment{
                         Log.i("成功", "连接到数据库");
                         rs1.beforeFirst();
                         list.clear();
-                        while(rs1.next())
+                        rs1.next();
+                        if(rs1.getString(1).equals("支出")&&row==1)
+                        {
+                            list.add((float) 0);
+                            list.add(Float.parseFloat(rs1.getString(2)));
+                        }
+                        if(rs1.getString(1).equals("收入")&&row==1)
                         {
                             list.add(Float.parseFloat(rs1.getString(2)));
+                            list.add((float) 0);
+                        }
+                        if(row==2)
+                        {
+                            rs1.beforeFirst();
+                            while(rs1.next())
+                            {
+                                list.add(Float.parseFloat(rs1.getString(2)));
+                            }
                         }
                         msg.what=msgWhatr;
                     }
